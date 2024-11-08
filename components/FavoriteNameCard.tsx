@@ -1,20 +1,28 @@
 import { Ionicons } from "@expo/vector-icons";
-import { View, Text, styled } from "tamagui";
+import { Image } from "expo-image";
+import { memo } from "react";
+import { Pressable } from "react-native";
+import { View, Text, styled, XStack } from "tamagui";
 
 import { Name } from "../models/types";
+import { useNameStore } from "../store/nameStore";
+
+import { BACKGROUND_COLORS, BACKGROUND_IMAGES } from "@/constants/constants";
 
 interface FavoriteNameCardProps {
   name: Name;
 }
 
 const Card = styled(View, {
-  backgroundColor: "$gray2",
   borderRadius: 12,
   padding: "$4",
-  marginBottom: "$4",
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: 2,
+  },
   shadowOpacity: 0.25,
   shadowRadius: 3.84,
-  elevation: 5,
 });
 
 const NameText = styled(Text, {
@@ -29,28 +37,52 @@ const DetailText = styled(Text, {
   marginBottom: 4,
 });
 
-const RatingContainer = styled(View, {
-  flexDirection: "row",
-  marginTop: 8,
-});
+function FavoriteNameCard({ name }: FavoriteNameCardProps) {
+  const updateRating = useNameStore((state) => state.updateRating);
 
-export function FavoriteNameCard({ name }: FavoriteNameCardProps) {
+  const handleRatingPress = (rating: number) => {
+    updateRating(name.id, rating);
+  };
+
   return (
-    <Card>
-      <NameText>{name.name}</NameText>
-      <DetailText>Origin: {name.origin}</DetailText>
-      <DetailText>Gender: {name.gender}</DetailText>
-      {name.meaning && <DetailText>Meaning: {name.meaning}</DetailText>}
-      <RatingContainer>
-        {Array.from({ length: 5 }).map((_, index) => (
-          <Ionicons
-            key={index}
-            name={index < (name.rating || 0) ? "star" : "star-outline"}
-            size={20}
-            color={index < (name.rating || 0) ? "#FFD700" : "#C0C0C0"}
+    <Card
+      backgroundColor={
+        BACKGROUND_COLORS[name.gender as keyof typeof BACKGROUND_COLORS]
+      }
+    >
+      <XStack justifyContent="space-between">
+        <XStack alignItems="center" gap="$2">
+          <Image
+            source={
+              BACKGROUND_IMAGES[name.gender as keyof typeof BACKGROUND_IMAGES]
+            }
+            style={{ width: 50, height: 50, borderRadius: 10 }}
+            contentFit="contain"
+            cachePolicy="disk"
           />
-        ))}
-      </RatingContainer>
+          <NameText>{name.name}</NameText>
+        </XStack>
+        <XStack justifyContent="space-between">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <Pressable key={index} onPress={() => handleRatingPress(index + 1)}>
+              <Ionicons
+                name={index < (name.rating || 0) ? "star" : "star-outline"}
+                size={20}
+                color={index < (name.rating || 0) ? "#ff9100" : "#C0C0C0"}
+              />
+            </Pressable>
+          ))}
+        </XStack>
+      </XStack>
+
+      <XStack justifyContent="space-between">
+        <DetailText>Origin: {name.origin}</DetailText>
+        <DetailText>Religion: {name.religion}</DetailText>
+      </XStack>
+
+      {name.meaning && <DetailText>Meaning: {name.meaning}</DetailText>}
     </Card>
   );
 }
+
+export default memo(FavoriteNameCard);

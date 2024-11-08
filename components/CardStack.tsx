@@ -11,10 +11,9 @@ import Animated, {
 } from "react-native-reanimated";
 import { Text, View, YStack, XStack } from "tamagui";
 
-import boyBg from "../assets/images/card-bg/boy.png";
-import girlBg from "../assets/images/card-bg/girl.png";
 import { Name, SwipeDirection } from "../models/types";
 
+import { BACKGROUND_COLORS, BACKGROUND_IMAGES } from "@/constants/constants";
 import { colors } from "@/styles/preset-styles";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -38,17 +37,6 @@ export function CardStack({
 }: CardStackProps) {
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
-
-  const BACKGROUND_IMAGES = {
-    male: boyBg,
-    female: girlBg,
-  } as const;
-
-  const BACKGROUND_COLORS = {
-    male: "#bde0fe",
-    female: "#ffc8dd",
-    unisex: "$gray3",
-  } as const;
 
   const likeOpacity = useAnimatedStyle(() => ({
     opacity: interpolate(translateX.value, [0, SCREEN_WIDTH / 4], [0, 1]),

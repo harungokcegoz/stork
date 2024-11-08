@@ -1,13 +1,11 @@
 export interface Name {
   id: string;
   name: string;
+  gender: "male" | "female" | "unisex";
   origin: string;
-  religion?: Religion;
   meaning?: string;
-  pronunciation?: string;
-  variants?: string[];
+  religion?: string;
   rating?: number;
-  gender: Gender;
 }
 
 export type Gender = "male" | "female" | "unisex";

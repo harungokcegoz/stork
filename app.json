@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "stork",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -14,7 +14,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.hgdev.stork"
+      "bundleIdentifier": "com.hgdev.stork",
+      "config": {
+        "usesNonExemptEncryption": false
+      },
     },
     "android": {
       "adaptiveIcon": {

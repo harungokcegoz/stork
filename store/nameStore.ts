@@ -15,6 +15,7 @@ interface NameStore {
   setLastDismissed: (name: Name | null) => void;
   undoLastDismiss: (name: Name) => void;
   initializeNames: () => void;
+  updateRating: (nameId: string, rating: number) => void;
 }
 
 export const useNameStore = create<NameStore>()(
@@ -49,6 +50,13 @@ export const useNameStore = create<NameStore>()(
         set((state) => ({
           names: [name, ...state.names],
           lastDismissed: null,
+        })),
+
+      updateRating: (nameId: string, rating: number) =>
+        set((state) => ({
+          favorites: state.favorites.map((name) =>
+            name.id === nameId ? { ...name, rating } : name
+          ),
         })),
     }),
     {
