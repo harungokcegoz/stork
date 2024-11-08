@@ -1,16 +1,3 @@
-export const pressAnimationStyle = {
-  animation: "quick",
-  hoverStyle: { scale: 0.925 },
-  pressStyle: { scale: 0.875 },
-};
-
-export const showUpAnimationStyle = {
-  marginVertical: "$2",
-  animation: "quick",
-  enterStyle: { opacity: 0, scale: 0.9 },
-  exitStyle: { opacity: 0, scale: 0.9 },
-};
-
 export const colors = {
   primary: "#8ecae6",
   secondary: "#283618",
@@ -40,4 +27,11 @@ export const shadows = {
   },
   shadowOpacity: 0.3,
   shadowRadius: 5,
+};
+
+export const pressAnimationStyle = {
+  pressStyle: {
+    opacity: 0.7,
+    scale: 0.98,
+  },
 };
